@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Maître du Donjon"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/room01"
+                android:text="@string/room01"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+            <ImageButton
+                android:id="@+id/room02"
+                android:text="@string/room02"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+
+            <ImageButton
+                android:id="@+id/room03"
+                android:text="@string/room03"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+            <ImageButton
+                android:id="@+id/room04"
+                android:text="@string/room04"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/room05"
+                android:text="@string/room05"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+            <ImageButton
+                android:id="@+id/room06"
+                android:text="@string/room06"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room07"
+                android:text="@string/room07"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room08"
+                android:text="@string/room08"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/room09"
+                android:text="@string/room09"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room10"
+                android:text="@string/room10"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room11"
+                android:text="@string/room11"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room12"
+                android:text="@string/room12"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/room13"
+                android:text="@string/room13"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+            <ImageButton
+                android:id="@+id/room14"
+                android:text="@string/room14"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room15"
+                android:text="@string/room15"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+
+            <ImageButton
+                android:id="@+id/room16"
+                android:text="@string/room16"
+                android:src="@drawable/porte"
+                android:scaleType="fitCenter"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="5dp"
+                android:background="@color/transparent"
+                android:onClick="onClick"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pièces non explorées :"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:id="@+id/textView_piecenonexplorees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nb_pieces_restantes"
+                android:gravity="right"
+                android:textSize="18dp"
+                android:layout_marginRight="20dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Puissance :"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:id="@+id/textView_Puissance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/puissance"
+                android:gravity="right"
+                android:textSize="18dp"
+                android:layout_marginRight="20dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Points de vie :"
+                android:textSize="18dp"
+                android:layout_marginLeft="20dp"/>
+            <TextView
+                android:id="@+id/textView_PV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/vie"
+                android:textSize="18dp"
+                android:gravity="right"
+                android:layout_marginRight="20dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView_Affichage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Résultat du combat"
+        android:textStyle="bold"
+        android:textSize="35dp"
+        android:layout_weight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/resultat_combat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="@string/resultat_combat"
+        android:textSize="20dp" />
+
+
+</LinearLayout>
