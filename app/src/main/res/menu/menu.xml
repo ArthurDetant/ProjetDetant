@@ -10,5 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Quitter" />
+    <item
+        android:id="@+id/paramètre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Paramètre" />
+    <item
+        android:id="@+id/ListeScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="ListeScore" />
 
 </menu>
