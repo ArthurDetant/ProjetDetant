@@ -24,7 +24,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         lv = (ListView) findViewById(R.id.maListe);
         try {
-            getFromIntern();
+            getFileList();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,7 +34,7 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    private void getFromIntern() throws IOException {
+    private void getFileList() throws IOException {
 
         String value = "";
 

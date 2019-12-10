@@ -13,9 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
     int potv;
     int niveau=1;
     boolean popup = false;
+    private boolean customMatch = false;
     CustomPopup customPopup;
     PopupNom popupNom;
 
     //ListView des meilleurs scores
-    ListView listView;
     ArrayList<String> listItems = new ArrayList<>();
 
     private ImageButton room01;
@@ -89,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        try {
+            getFileList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         resultat_combat= findViewById(R.id.resultat_combat);
         textView_PV= findViewById(R.id.textView_PV);
@@ -119,12 +121,8 @@ public class MainActivity extends AppCompatActivity {
         popupNom = new PopupNom(this);
         popupNom.build();
 
-        /*listView = (ListView) findViewById(R.id.maListe);
-        try {
-            getFileList();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
+
     }
 
     public void onClick(View view){
@@ -258,7 +256,9 @@ public class MainActivity extends AppCompatActivity {
             textView_PV.setText("0");
             Toast.makeText(MainActivity.this, "Partie perdue", Toast.LENGTH_SHORT).show();
             textView_Affichage.setText("Partie perdue");
+            if (customMatch == false){
             sauvegarde();
+            }
         }else
         if (nb_piece== 0){
             Toast.makeText(MainActivity.this, "Partie gagnée", Toast.LENGTH_SHORT).show();
@@ -306,7 +306,10 @@ public class MainActivity extends AppCompatActivity {
             textView_Puissance.setText(puissanceBase);
             textView_PV.setText(pvBase);
             popupNomJ = "Anonyme";
+            customMatch = false;
         }
+        popupNom = new PopupNom(this);
+        popupNom.build();
 
         resultat_combat.setText("...");
         textView_piecenonexplorees.setText("16");
@@ -375,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
     private void niveauSuivant(){
         AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Felicitations !");
-        myPopup.setMessage("Vous êtes meilleur que tous ces monstres \n Passer au niveau suivant ?");
+        myPopup.setMessage("Voulez vous passer au niveau suivant ?");
         myPopup.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -394,10 +397,9 @@ public class MainActivity extends AppCompatActivity {
     public void onPop(View v){
         popupVie = customPopup.getVie();
         popupPuissance = customPopup.getPuissance();
-        popupNomJ = customPopup.getNom();
         String puissanceMax = customPopup.getPuissanceMaxMonstre();
 
-        if (popupVie.matches("") || popupPuissance.matches("") ||  popupNomJ.matches("") || puissanceMax.matches("") || Integer.parseInt(puissanceMax)<150){
+        if (popupVie.trim().matches("") || popupPuissance.matches("") ||  puissanceMax.trim().matches("") || Integer.parseInt(puissanceMax)<150){
             Toast.makeText(MainActivity.this, "Veuillez remplir tous les champs ! ou puissance max monstre >= 150", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -407,6 +409,7 @@ public class MainActivity extends AppCompatActivity {
         monstremin = monstremax-149;
         popup = true;
         restart();
+        customMatch = true;
 
         customPopup.dismiss();
     }
@@ -414,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
     public void validPopName(View v){
         popupNomJ = popupNom.getName();
 
-        if(popupNomJ.equals("")){
+        if(popupNomJ.trim().equals("")){
             Toast.makeText(MainActivity.this, "Veuillez entrer un nom !", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -440,7 +443,7 @@ public class MainActivity extends AppCompatActivity {
         Date now = new Date();
         String date = formatter.format(now);
 
-        String score = popupNomJ + " - Etage : " + niveau + " - Puissance : " + textView_Puissance.getText().toString()+ " - " + date  ;
+        String score = popupNomJ + " - Niveau : " + niveau + " - Puissance : " + textView_Puissance.getText().toString()+ " - " + date  ;
 
         int insert = 0;
         int index = 0;
@@ -474,6 +477,11 @@ public class MainActivity extends AppCompatActivity {
         }
         if(listItems.isEmpty()){
             listItems.add(score);
+            if(listItems.size() > 10){
+                for (int i = 10; i<=listItems.size(); i++){
+                    listItems.remove(i);
+                }
+            }
         } else {
             for (int i = 0; i < listItems.size(); i++) {
                 nb=0;
@@ -511,8 +519,18 @@ public class MainActivity extends AppCompatActivity {
             }
             if(done) {
                 listItems.add(insert, score);
+                if(listItems.size() > 10){
+                    for (int i = 10; i<=listItems.size(); i++){
+                        listItems.remove(i);
+                    }
+                }
             } else {
                 listItems.add(score);
+                if(listItems.size() > 10){
+                    for (int i = 10; i<=listItems.size(); i++){
+                        listItems.remove(i);
+                    }
+                }
             }
         }
 
@@ -549,8 +567,7 @@ public class MainActivity extends AppCompatActivity {
         }
         inputStream.close();
         br.close();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
-        listView.setAdapter(adapter);
+
 
     }
 

@@ -10,7 +10,6 @@ public class CustomPopup extends Dialog {
 
 
     private Button validerbutton;
-    private EditText editTextnom;
     private EditText editTextpuissance;
     private EditText editTextvie;
     private EditText editTextmaxmonstre;
@@ -20,14 +19,12 @@ public class CustomPopup extends Dialog {
         super(activity, R.style.Theme_AppCompat_DayNight_Dialog);
         setContentView(R.layout.my_popup_template);
         validerbutton = findViewById(R.id.buttonvalider);
-        editTextnom = findViewById(R.id.editTextnom);
         editTextpuissance = findViewById(R.id.editTextpuissance);
         editTextvie = findViewById(R.id.editTextvie);
         editTextmaxmonstre = findViewById(R.id.editTextmaxmonstre);
 
     }
     public String getVie(){ return editTextvie.getText().toString();}
-    public String getNom(){ return editTextnom.getText().toString();}
     public String getPuissance(){ return editTextpuissance.getText().toString();}
     public String getPuissanceMaxMonstre(){ return editTextmaxmonstre.getText().toString();}
 
