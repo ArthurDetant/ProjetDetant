@@ -14,7 +14,7 @@ public class PopupNom extends Dialog {
     Button validButtonName;
 
 
-    public PopupNom(Activity activity){
+    public PopupNom(Activity activity){ //Récupération du layout de la popup(my_popup_name)
         super(activity, R.style.Theme_AppCompat_DayNight_Dialog);
         setContentView(R.layout.my_popup_name);
 
@@ -22,8 +22,13 @@ public class PopupNom extends Dialog {
         validButtonName = findViewById(R.id.validName);
     }
 
-    public Button getValidButtonName(){return validButtonName;}
-    public String getName(){return EditTextnomJ.getText().toString();}
+    public Button getValidButtonName(){
+        return validButtonName;
+    }
+
+    public String getName(){
+        return EditTextnomJ.getText().toString();
+    }
 
     public void build(){
         show();

@@ -19,16 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_gravity="center"
             android:text="Joueur"
             android:textColor="#000000"
-            android:textSize="35dp"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="Puissance"
                     android:textColor="#000000"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:gravity="center"/>
 
                 <TextView
@@ -64,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:text="Points de vie" />
 
                 <TextView
@@ -81,9 +83,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,17 +94,19 @@
             android:id="@+id/nomMonstre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Monsieur pas Content"
+            android:text="Monsieur Propre"
             android:textStyle="bold"
             android:textColor="#8B0000"
-            android:textSize="35dp"
+            android:textSize="30dp"
             android:layout_gravity="center"
             android:gravity="center"/>
         <ImageView
             android:id="@+id/Imagemonstre"
             android:layout_weight="1"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="230dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
             android:src="@drawable/monstre00"
             />
 
@@ -114,7 +115,7 @@
             android:layout_height="wrap_content"
             android:text="Puissance"
             android:textColor="#000000"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:gravity="center"/>
 
         <TextView
@@ -123,29 +124,31 @@
             android:layout_height="wrap_content"
             android:text="@string/puissance_adversaire"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="308dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_weight="1">
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/Button_Attaque"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
-            android:textSize="20dp"
-            android:text="Attaque"/>
+            android:text="Attaque"
+            android:textSize="15dp" />
+
         <Button
             android:id="@+id/Button_Fuite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textSize="20dp"
-            android:text="FUITE"/>
+            android:text="FUITE"
+            android:textSize="15dp" />
     </LinearLayout>
 </LinearLayout>

@@ -31,7 +31,6 @@ public class ListActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
         lv.setAdapter(adapter);
-
     }
 
     private void getFileList() throws IOException {
@@ -43,18 +42,13 @@ public class ListActivity extends AppCompatActivity {
         int content;
 
         while ((content=br.read())!=-1){
-
             if (content==10){
                 listItems.add(value);
                 value = "";
                 continue;
             }
-
             value += (char) content;
-
-
         }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, listItems);
         lv.setAdapter(adapter);
     }

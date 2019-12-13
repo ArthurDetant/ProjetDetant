@@ -33,60 +33,41 @@ import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     Vector puissanceM = new Vector();
-    String valeurPotion;
+    String valeurPotion, popupVie, popupPuissance;
     String puissanceBase="100";
     String pvBase="10";
-    String popupVie;
-    String popupPuissance;
     String popupNomJ = "Anonyme";
+
     int monstremin=1;
     int monstremax=150;
-    int potionVie;
-    int potionPuissance;
-    int potp;
-    int potv;
+    int potionVie, potionPuissance, potp, potv;
     int niveau=1;
+
     boolean popup = false;
-    private boolean customMatch = false;
+    boolean customMatch = false;
+
     CustomPopup customPopup;
     PopupNom popupNom;
 
     //ListView des meilleurs scores
     ArrayList<String> listItems = new ArrayList<>();
 
-    private ImageButton room01;
-    private ImageButton room02;
-    private ImageButton room03;
-    private ImageButton room04;
-    private ImageButton room05;
-    private ImageButton room06;
-    private ImageButton room07;
-    private ImageButton room08;
-    private ImageButton room09;
-    private ImageButton room10;
-    private ImageButton room11;
-    private ImageButton room12;
-    private ImageButton room13;
-    private ImageButton room14;
-    private ImageButton room15;
-    private ImageButton room16;
+    private ImageButton room01, room02, room03, room04;
+    private ImageButton room05, room06, room07, room08;
+    private ImageButton room09, room10, room11, room12;
+    private ImageButton room13, room14, room15, room16;
     private ImageButton buttontps;
 
-    private TextView resultat_combat;
-    private TextView textView_PV;
-    private TextView textView_piecenonexplorees;
-    private TextView textView_Puissance;
-    private TextView textView_Affichage;
-
+    private TextView resultat_combat, textView_PV, textView_piecenonexplorees, textView_Puissance, textView_Affichage;
 
     public static final int FIGHT = 1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Récupération de la liste des scores
         try {
             getFileList();
         } catch (IOException e) {
@@ -116,31 +97,34 @@ public class MainActivity extends AppCompatActivity {
         room15 = findViewById(R.id.room15);
         room16 = findViewById(R.id.room16);
 
-        initialiserPuissance(monstremin,monstremax);
-        initialiserPotions();
+        initialiserPuissance(monstremin,monstremax); //Initialisation de la puissance des monstres
+        initialiserPotions(); // Initialisation des potions
+
+        //Affichage du popup pour le nom du joueur
         popupNom = new PopupNom(this);
         popupNom.build();
-
-
-
     }
 
     public void onClick(View view){
-        buttontps= findViewById(view.getId());
-        if(buttontps.getTag() == "Vaincu"){
+        buttontps= findViewById(view.getId()); //prend la valeur du bouton sur lequel on clique
+
+        if(buttontps.getTag() == "Vaincu"){ // Si le tag est égal à vaincu, alors affichage d'un toast
             Toast.makeText(MainActivity.this, "le monstre est déjà mort!", Toast.LENGTH_SHORT).show();
             return;
-        }else if(!textView_Affichage.getText().toString().matches("Résultat du combat")){
+        }else if(!textView_Affichage.getText().toString().matches("Résultat du combat")){ //Si le textView n'affiche plus résultat du combat, alors la partie est finie.
             Toast.makeText(MainActivity.this, "Veuillez recommencer une partie.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String Room = getResources().getResourceEntryName(view.getId());
-        String numRoom = Room.substring(4);
-        int i = Integer.parseInt(numRoom)-1;
-        String puissancemonstre = puissanceM.get(i).toString();
+        String Room = getResources().getResourceEntryName(view.getId());  // Récupération de roomXX
+        String numRoom = Room.substring(4); //Suppréssion des 4 premiers caractères: il reste XX.
+        int i = Integer.parseInt(numRoom)-1; //on récupére le XX en int et on enlève 1 pour l'adapter au vector qui commence à 0
+        String puissancemonstre = puissanceM.get(i).toString(); //récupération de la puissance dans le vector en fonction du bouton cliqué
+
+        //Envoi des données nécéssaires au fightActivity
         Intent intent = new Intent(MainActivity.this, FightActivity.class);
 
+        //Si dans la salle cliquée se trouve une potion on y envoi la valeur + le type de potion
         if(i == potp){
             intent.putExtra("Potion", "power");
             valeurPotion = potionPuissance();
@@ -151,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             valeurPotion= potionVie();
             intent.putExtra("Valeur", valeurPotion);
             potv=-1;
-        } else {
+        } else {  //sinon on envoi false pour les potions
             intent.putExtra("Potion", "false");
             intent.putExtra("Valeur", "false");
         }
@@ -170,30 +154,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode== Activity.RESULT_CANCELED){
-            fuite();
+        //Si on a cliqué sur fuite ou sur le bouton retour du téléphone
+        if (resultCode == Activity.RESULT_CANCELED){
+            fuite();  //gestion de la fuite
             resultat_combat.setText("fuite");
-            buttontps.setImageResource(R.drawable.loutre);
-            checkGameResult();
+            buttontps.setImageResource(R.drawable.loutre); //Changement d'image du bouton pour indiquer qu'on y est passé mais qu'on a pas vaincu le monstre
+            checkGameResult(); //Vérification si la partie est finie
             return;
         }
 
         if (requestCode ==FIGHT){
+            // Récupération des données aprés le combat
             textView_Puissance.setText(data.getStringExtra("PuissanceJoueur"));
             textView_PV.setText(data.getStringExtra("PVJoueur"));
             resultat_combat.setText(data.getStringExtra("resultatfight"));
+
             Toast.makeText(MainActivity.this, resultat_combat.getText().toString(), Toast.LENGTH_SHORT).show();
-            if ( resultat_combat.getText().toString().equals("defaite")){
+
+            if ( resultat_combat.getText().toString().equals("defaite")){ //Changement d'image du bouton pour indiquer qu'on y est passé mais qu'on a pas vaincu le monstre
                 buttontps.setImageResource(R.drawable.loutre);
-            } else if (resultat_combat.getText().toString().equals("victoire")){
+            } else if (resultat_combat.getText().toString().equals("victoire")){ //Changement d'image du bouton pour indiquer qu'on a vaincu le monstre
                 buttontps.setImageResource(R.drawable.loutrepasenforme);
-                buttontps.setTag("Vaincu");
-                piece();
+                buttontps.setTag("Vaincu"); // Ajout d'un Tag vaincu sur le bouton
+                piece();  //Le nombre de pièces explorées est mis à jour en cas de victoire
             }
-
         }
-       checkGameResult();
-
+       checkGameResult(); //Vérification si la partie est finie
     }
 
 
@@ -206,20 +192,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //En fonction du choix dans le menu
         switch (item.getItemId()) {
-            case R.id.redemarrer:
+            case R.id.redemarrer: // restart de la game
                 popup= false;
                 restart();
                 return true;
-            case R.id.quitter:
+            case R.id.quitter: //Quitter l'application
                 finish();
                 return true;
-            case R.id.paramètre:
+            case R.id.paramètre: //Personnaliser le donjon
                 customPopup = new CustomPopup(this);
                 customPopup.build();
                 return true;
-            case R.id.ListeScore:
+            case R.id.ListeScore: //Affichage du top 10 des scores
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 startActivity(intent);
 
@@ -228,35 +214,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void initialiserPuissance(int min, int max){
+    public void initialiserPuissance(int min, int max){ //Ajout de nombres aléatoires entre min et max dans un vector
         for (int i=0 ; i<16; i++){
             int n = genererInt(min,max);
             String power = Integer.toString(n);
             puissanceM.add(power);
-
         }
     }
-    public void fuite(){
+
+    public void fuite(){ //En cas de fuite le joueur perd 1 pv
         Toast.makeText(MainActivity.this, "FUITE", Toast.LENGTH_SHORT).show();
         int pv_tps =Integer.parseInt(textView_PV.getText().toString());
         pv_tps-=1;
         textView_PV.setText(Integer.toString(pv_tps));
     }
-    public void piece(){
 
+    public void piece(){ //Mise à jour du nombre de pièces explorées
         int piece =Integer.parseInt(textView_piecenonexplorees.getText().toString());
         piece--;
         textView_piecenonexplorees.setText(Integer.toString(piece));
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void checkGameResult(){
+    public void checkGameResult(){  //Résultat de la partie
         int pv = Integer.parseInt(textView_PV.getText().toString());
         int nb_piece = Integer.parseInt(textView_piecenonexplorees.getText().toString());
         if(pv <=0){
             textView_PV.setText("0");
             Toast.makeText(MainActivity.this, "Partie perdue", Toast.LENGTH_SHORT).show();
             textView_Affichage.setText("Partie perdue");
-            if (customMatch == false){
+
+            if (customMatch == false){ //si c'est une partie personnalisée, on ne met pas le joueur dans la liste des scores.
             sauvegarde();
             }
         }else
@@ -267,38 +255,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void initialiserPotions(){
+        //génération des valeurs des potions
         potionPuissance = genererInt(5,10);
         potionVie = genererInt(1,3);
+        //génération des salles dans lesquelles ces potions iront
         potp = genererInt(0,15);
         do {
             potv = genererInt(0, 15);
-        }while(potp == potv);
+        }while(potp == potv); //les potions ne peuvent pas être dans la même salle
     }
-    public String potionPuissance(){
+
+    public String potionPuissance(){ //prise en compte de la potion
         int puissanceJ_tps =Integer.parseInt(textView_Puissance.getText().toString());
         puissanceJ_tps += potionPuissance;
         textView_Puissance.setText(Integer.toString(puissanceJ_tps));
         String p = Integer.toString(potionPuissance);
         return p;
-
     }
-    public String potionVie(){
+    public String potionVie(){ //prise en compte de la potion
         int pv_tps =Integer.parseInt(textView_PV.getText().toString());
         pv_tps += potionVie;
         textView_PV.setText(Integer.toString(pv_tps));
         String p = Integer.toString(potionVie);
         return p;
     }
-    public int genererInt(int min, int max){
+
+    public int genererInt(int min, int max){ //génère un int entre min et max
         Random random = new Random();
         int nb;
         nb = min + random.nextInt(max+1 - min);
         return nb;
     }
-    private void restart(){
-        if (popup == false){
+
+    private void restart(){ //recommence la partie
+        if (popup == false){ //Si partie perso, pas d'initialisation de base
             puissanceBase="100";
             pvBase="10";
             monstremin=1;
@@ -308,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
             popupNomJ = "Anonyme";
             customMatch = false;
         }
+        // demande du nom du joueur
         popupNom = new PopupNom(this);
         popupNom.build();
 
@@ -320,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         reinitialiserImage();
         reinitialiserTag();
     }
-    public void nextLevel(){
+    public void nextLevel(){ //En cas de victoire, passage au niveau suivant un peu plus compliqué
         niveau++;
         int pbase =Integer.parseInt(puissanceBase);
         pbase+=50;
@@ -338,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
         reinitialiserImage();
         reinitialiserTag();
     }
-    public void reinitialiserImage(){
+    public void reinitialiserImage(){ //réinitialisation des images des boutons
         room01.setImageResource(R.drawable.porte);
         room02.setImageResource(R.drawable.porte);
         room03.setImageResource(R.drawable.porte);
@@ -356,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
         room15.setImageResource(R.drawable.porte);
         room16.setImageResource(R.drawable.porte);
     }
-    public void reinitialiserTag(){
+    public void reinitialiserTag(){ //réinitialisation des Tags
         room01.setTag("?");
         room02.setTag("?");
         room03.setTag("?");
@@ -375,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         room16.setTag("?");
     }
 
-    private void niveauSuivant(){
+    private void niveauSuivant(){ //popup du niveau suivant
         AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Felicitations !");
         myPopup.setMessage("Voulez vous passer au niveau suivant ?");
@@ -394,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
         myPopup.show();
     }
 
-    public void onPop(View v){
+    public void onPop(View v){ //poppup de la partie personnalisée
         popupVie = customPopup.getVie();
         popupPuissance = customPopup.getPuissance();
         String puissanceMax = customPopup.getPuissanceMaxMonstre();
@@ -414,64 +406,53 @@ public class MainActivity extends AppCompatActivity {
         customPopup.dismiss();
     }
 
-    public void validPopName(View v){
+    public void validPopName(View v){ //popup du nom simple
         popupNomJ = popupNom.getName();
 
         if(popupNomJ.trim().equals("")){
             Toast.makeText(MainActivity.this, "Veuillez entrer un nom !", Toast.LENGTH_SHORT).show();
             return;
         }
-
         popupNom.dismiss();
     }
 
 
-
-
-
-
-
-
-
-
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void sauvegarde(){
+    private void sauvegarde(){ //Fonction de sauvegarde des scores et de classement
         Toast.makeText(MainActivity.this, "Sauvegarde du score en cours...", Toast.LENGTH_SHORT).show();
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
         Date now = new Date();
         String date = formatter.format(now);
 
+        //Création d'un string de score
         String score = popupNomJ + " - Niveau : " + niveau + " - Puissance : " + textView_Puissance.getText().toString()+ " - " + date  ;
 
+        //Initialisations de variables
         int insert = 0;
         int index = 0;
         int nb = 0;
         boolean done = false;
-        String stage = "";
-        String power = "";
-        String currentStage = "";
-        String currentPower = "";
-        String currentScore = "";
+        String niveau = "";
+        String puissance = "";
+        String niveauActuel = "";
+        String puissanceActuelle = "";
+        String scoreActuel = "";
 
-
-        while (index != score.length() -1) {
+        while (index != score.length() -1) { //récupération du niveau et de la puissance
             if(score.substring(index, index+1).matches(":")){
                 int j = index+2;
                 nb++;
                 while(!score.substring(j,j+1).matches(" ")) {
                     if (!score.substring(j, j + 1).matches(" ")) {
                         if (nb == 1) {
-                            stage += score.substring(j, j + 1);
-
+                            niveau += score.substring(j, j + 1);
                         } else if (nb == 2) {
-                            power += score.substring(j, j + 1);
+                            puissance += score.substring(j, j + 1);
                         }
                     }
                     j++;
                 }
-
             }
             index++;
         }
@@ -486,23 +467,23 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < listItems.size(); i++) {
                 nb=0;
                 index = 0;
-                currentPower = "";
-                currentStage = "";
+                puissanceActuelle = "";
+                niveauActuel = "";
 
-                currentScore = listItems.get(i); //Récupération élément Listview
+                scoreActuel = listItems.get(i); //Récupération élément Listview
 
-                while (index != currentScore.length() - 1) {
-                    if((index+1) > currentScore.length()){
+                while (index != scoreActuel.length() - 1) {
+                    if((index+1) > scoreActuel.length()){
                         break;
-                    } else if (currentScore.substring(index, index + 1).matches(":")) {
+                    } else if (scoreActuel.substring(index, index + 1).matches(":")) {
                         int j = index + 2;
                         nb++;
-                        while (!currentScore.substring(j, j + 1).matches(" ")) {
-                            if (!currentScore.substring(j, j + 1).matches(" ")) {
+                        while (!scoreActuel.substring(j, j + 1).matches(" ")) {
+                            if (!scoreActuel.substring(j, j + 1).matches(" ")) {
                                 if (nb == 1) { //Premier ':'
-                                    currentStage += currentScore.substring(j, j + 1); //Récupération niveau
+                                    niveauActuel += scoreActuel.substring(j, j + 1); //Récupération niveau
                                 } else if (nb == 2) { //Deuxième ':'
-                                    currentPower += currentScore.substring(j, j + 1); //Récupération puissance
+                                    puissanceActuelle += scoreActuel.substring(j, j + 1); //Récupération puissance
                                 }
                             }
                             j++;
@@ -511,7 +492,7 @@ public class MainActivity extends AppCompatActivity {
                     index++;
                 }
 
-                if (((Integer.parseInt(stage) > Integer.parseInt(currentStage)) || (Integer.parseInt(stage) == Integer.parseInt(currentStage) && Integer.parseInt(power) > Integer.parseInt(currentPower))) && !done ) {
+                if (((Integer.parseInt(niveau) > Integer.parseInt(niveauActuel)) || (Integer.parseInt(niveau) == Integer.parseInt(niveauActuel) && Integer.parseInt(puissance) > Integer.parseInt(puissanceActuelle))) && !done ) {
 
                     insert = i;
                     done = true;
@@ -548,14 +529,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void getFileList() throws IOException {
 
+    private void getFileList() throws IOException { //récupération de la liste des scores
         String value = "";
 
         FileInputStream inputStream = openFileInput("sauvegarde");
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"utf8"), 8192);
         int content;
-
         while ((content=br.read())!=-1){
 
             if (content==10){ // code \n
